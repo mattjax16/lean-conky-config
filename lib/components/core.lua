@@ -221,16 +221,19 @@ function conky_disks(interv)
                 name = "${lua font icon_s  ${voffset $sr{-4}}${font :bold:size=$sc{11}}⌂}"
             end
 
-            table.insert(disks, {
-                name = name,
-                type = disk.type,
-                used = disk.used,
-                size = disk.size,
-                used_perc = utils.ratio_perc(disk.used, disk.size),
-                -- human friendly size strings
-                used_h = utils.filesize(disk.used),
-                size_h = utils.filesize(disk.size),
-            })
+            -- Check if the disk name contains "timeshift" and skip if it does
+            if not string.find(name, "timeshift") then
+                table.insert(disks, {
+                    name = name,
+                    type = disk.type,
+                    used = disk.used,
+                    size = disk.size,
+                    used_perc = utils.ratio_perc(disk.used, disk.size),
+                    -- human friendly size strings
+                    used_h = utils.filesize(disk.used),
+                    size_h = utils.filesize(disk.size),
+                })
+            end
         end
         return utils.trim(lcc.tpl.disks { disks = disks })
     end)
