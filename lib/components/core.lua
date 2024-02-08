@@ -152,6 +152,8 @@ end
 lcc.tpl.cpu = [[
 ${font}${execi 3600 grep model /proc/cpuinfo | cut -d : -f2 | tail -1 | sed 's/\s//'} ${alignr} ${cpu cpu0}%
 ${color3}${cpugraph cpu0}${color}
+${color2}${lua font h2 TEMP:  }${font}${alignr}${hwmon 3 temp 1}°C
+
 {% if top_cpu_entries then %}
 ${color2}${lua font h2 {PROCESS ${goto $sr{156}}PID ${goto $sr{194}}MEM% ${alignr}CPU%}}${font}${color}#
 {% for _, v in ipairs(top_cpu_entries) do +%}
